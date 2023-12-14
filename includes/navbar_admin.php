@@ -25,13 +25,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../Pages/categorie.php">
                         <i class="fas fa-layer-group"></i>
                         <span class="nav-item">Catégorie</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../Pages/product.php">
                         <i class="fas fa-spa"></i>
                         <span class="nav-item">Produit</span>
                     </a>
