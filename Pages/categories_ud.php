@@ -7,18 +7,21 @@ if (isset($_GET['id_s'])) {
     header("location: categorie.php");
 }
 
+
 if (isset($_GET['id_m'])) {
     $id_u = $_GET['id_m'];
-    $result = $admin->afficherCategory(); 
+    $result = $admin->afficherCategory_u($id_u);
 
-    if ($row = $result->fetch(PDO::FETCH_ASSOC)) { 
+    if ($row = $result) { 
         if (isset($_POST['button'])) {
             $nom = $_POST['nom'];
 
             if (!empty($nom)) {
-                $req_update = $admin->updateCategory($id_u, $nom);
+                $req_update = $admin->updateCategory($nom, $id_u);
+
                 if ($req_update) {
-                    header("location: categories.php");
+                    header("location: categorie.php");
+                    exit(); 
                 } else {
                     $message = "Erreur : Catégorie non modifiée";
                 }
@@ -33,11 +36,10 @@ if (isset($_GET['id_m'])) {
     $message = "ID de catégorie manquant.";
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier catégorie</title>
@@ -47,9 +49,9 @@ if (isset($_GET['id_m'])) {
     <div class="flex">
         <?php include_once("../includes/navbar_admin.php"); ?>
         <div class="form">
-            <a href="cat_admin.php" class="back_btn"><img src="img/back.png"> Retour</a>
+            <a href="../Pages/categorie.php" class="back_btn"><img src="../assets/images/back.png"> Retour</a>
             <?php if (isset($row)): ?>
-                <h2>Modifier la catégorie : <?= $row['name'] ?> </h2>
+                <h2>Modifier la catégorie : <?= $row['name_cat'] ?> </h2>
                 <p class="erreur_message">
                     <?php
                     if (isset($message)) {
@@ -59,7 +61,8 @@ if (isset($_GET['id_m'])) {
                 </p>
                 <form action="" method="POST">
                     <label>Nom catégorie</label>
-                    <input type="text" name="nom" value="<?= $row['name'] ?>">
+                    <input type="text" name="nom" value="<?= $row['name_cat'] ?>">
+                    <input type="hidden" name="id_m" value="<?= $id_u ?>">
                     <input type="submit" value="Modifier" name="button">
                 </form>
             <?php else: ?>

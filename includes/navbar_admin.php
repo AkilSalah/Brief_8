@@ -31,9 +31,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../Pages/product.php">
+                    <a href="../Pages/produit.php">
                         <i class="fas fa-spa"></i>
                         <span class="nav-item">Produit</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../Pages/theme.php">
+                        <i class="fas fa-blog"></i>
+                        <span class="nav-item">Themes</span>
                     </a>
                 </li>
                 <li>

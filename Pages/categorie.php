@@ -65,10 +65,10 @@ if(isset ($_POST["button"])){
                 $result = $admin->afficherCategory();
                 foreach ($result as $row) {
                     echo "<tr>";
-                    echo "<td>" . $row['id'] . "</td>";
-                    echo "<td>" . $row['name'] . "</td>";
-                    echo "<td><a class='table-link' href='categories_ud.php?id_m=".$row['id']."'><img src='../assets/images/pen.png'></a></td>";
-                    echo "<td><a class='table-link' href='categories_ud.php?id_s=".$row['id']."'><img src='../assets/images/trash.png'></a></td>";
+                    echo "<td>" . $row['id_cat'] . "</td>";
+                    echo "<td>" . $row['name_cat'] . "</td>";
+                    echo "<td><a class='table-link' href='categories_ud.php?id_m=".$row['id_cat']."'><img src='../assets/images/pen.png'></a></td>";
+                    echo "<td><a class='table-link' href='categories_ud.php?id_s=".$row['id_cat']."'><img src='../assets/images/trash.png'></a></td>";
                     echo "</tr>";
                 }
 
