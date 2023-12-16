@@ -1,3 +1,23 @@
+<?php
+require_once("../Config/database.php");
+session_start();
+
+if (isset($_SESSION["user_id"])) {
+    $id_user = $_SESSION["user_id"];
+}
+
+if (isset($_GET["id_pro"])) {
+    $id_pro = $_GET['id_pro']; 
+    $req = $client->addPanier($id_user, $id_pro);
+
+    if ($req) {
+        header("location: client.php");
+        exit();
+    } else {
+        echo "Erreur lors de l'ajout au panier.";
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -49,13 +69,15 @@
             <li class="nav-item ">
             <a class="nav-link d-flex align-items-center" href="panier.php">
             <i id="shop" class="fas fa-shopping-cart fa-lg me-2"></i>
-           
+            <?php
+            $nb = $client->panierNB($id_user);
+            echo $nb;
+            ?>
         </a>
                   
             </li>
         </ul>
     </div>
-
 
     </div>
 </nav>
@@ -92,48 +114,71 @@
             <div class="container justify-content-around ">
                 <div>
                      <a class="btn fw-bold btn-outline-dark" href="client.php?voir_tout ">Tout </a>
-                
+                     <?php 
+                        $cats = $client->selectCategory();
+                        foreach ($cats as $cat) {
+                            $categoryId = $cat['id_cat'];
+                            $categoryName = $cat['name_cat'];
+                            $url = "?id_categorie=$categoryId";
+                        ?>
+                            <a class="btn fw-bold btn-outline-success" href="<?php echo $url; ?>"><?php echo $categoryName; ?></a>
+                        <?php
+                        }
+                        ?>
                 </div>
-               
                 <form class="d-flex" action="" method="GET">
                     <input class="form-control me-2" id="searchInput" name="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit" id="searchButton">Search</button>
                 </form>
             </div>
         </nav>
+        <?php
+            $products = $client->selectProduct();
 
-       
+            if (isset($_GET['search'])) {
+                $search = $_GET['search'];
+                if (!empty($search)) {
+                    $products = $client->searchProduct($search);
+                }
+            }
 
-     <div class="text-center container py-5">
-    <div class="row">
-        <?php while ($row = mysqli_fetch_assoc($produit)) : ?>
-            <div class="col-lg-4 col-md-12 mb-4">
-                <div class="card">
-                    <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" >
-                        <img src="img/<?=$row["image_produit"] ?>" class="w_image">
-                        <a href="#!">
-                            <div class="mask"></div>
-                            <div class="hover-overlay">
-                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <a href="" class="text-reset text-decoration-none">
-                            <h5 class="card-title mb-3"><?=$row["nom_produit"] ?></h5>
-                        </a>
-                        <a href="" class="text-reset text-decoration-none">
-                            <p>Catégorie : <?=$row["nom_categorie"] ?></p>
-                        </a>
-                        <h6 class="mb-3"> Prix :<?=$row["prix_produit"] ?> DH</h6>
-                        <a class='table-link btn btn-success' href='client.php?id_pro=<?= $row['id_produit']?>'>Commander</a>
-
+            if (isset($_GET['id_categorie'])) {
+                $categoryId = $_GET['id_categorie'];
+                if (!empty($categoryId)) {
+                    $products = $client->filtreCategory($categoryId);
+                }
+            }
+            ?>
+    <div class="text-center container py-5">
+        <div class="row">
+            <?php foreach ($products as $product) : ?>
+                <div class="col-lg-4 col-md-12 mb-4">
+                    <div class="card">
+                        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light">
+                            <img src="../assets/images/<?= $product["image_url"] ?>" class="w_image">
+                            <a href="#!">
+                                <div class="mask"></div>
+                                <div class="hover-overlay">
+                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <a href="" class="text-reset text-decoration-none">
+                                <h5 class="card-title mb-3"><?= $product["name_plant"] ?></h5>
+                            </a>
+                            <a href="" class="text-reset text-decoration-none">
+                            <p>Catégorie : <?= $product["name_cat"] ?></p>
+                            </a>
+                            <h6 class="mb-3">Prix :<?= $product["price"] ?> DH</h6>
+                            <a class='table-link btn btn-success' href='client.php?id_pro=<?= $product['id_plant'] ?>'>Commander</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endwhile; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
-</div>
+    
     </section>
 
     <footer class="text-center text-white mt-5" ">
@@ -158,5 +203,4 @@
     </footer>
 
 </body>
-
 </html>

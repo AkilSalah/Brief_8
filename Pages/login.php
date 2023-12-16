@@ -15,7 +15,10 @@ if(isset($_POST["submit"])){
         $userData = $result->fetch(PDO::FETCH_ASSOC);
 
         if($userData) {
-            $_SESSION["user_id"] = $userData["user_id"];
+            if(isset( $_SESSION["user_id"] )){
+                $userData["user_id"]= $_SESSION["user_id"];
+            }
+            
 
             if ($userData["user_type"] == '1') {
                 header("Location: client.php");

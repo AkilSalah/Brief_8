@@ -17,4 +17,6 @@ require_once("../Classes/role_class.php");
 $role= new Role ($con);
 require_once("../Classes/admin_class.php");
 $admin = new admin($con);
+require_once("../Classes/client.php");
+$client= new Client($con);
 ?>
