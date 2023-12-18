@@ -5,23 +5,23 @@ session_start();
 if(isset($_SESSION["Email"])) {
     $email = $_SESSION["Email"];
 }
+if(isset($_SESSION["user_id"])){
+  $user_id =$_SESSION["user_id"];
+ }
 
 if(isset($_POST["submit"])){
     $email = $_POST["Email"];
     $password = $_POST["Password"];
-    $result = $user->userLogin($email, $password);
+    $result = $user->userLogin($email, $password); 
 
-    if($result) {
+    if ($result) {
         $userData = $result->fetch(PDO::FETCH_ASSOC);
 
-        if($userData) {
-            if(isset( $_SESSION["user_id"] )){
-                $userData["user_id"]= $_SESSION["user_id"];
-            }
+        if ($userData) {
+            $_SESSION["user_id"] = $userData["user_id"];
             
-
-            if ($userData["user_type"] == '1') {
-                header("Location: client.php");
+            if ($userData["user_type"] == 1) {
+                header("Location:client.php");
             } else {
                 header("Location: admin_home.php");
             }
@@ -31,6 +31,7 @@ if(isset($_POST["submit"])){
     } else {
         echo "Erreur de connexion.";
     }
+
 }
 ?>
 

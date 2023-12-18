@@ -48,11 +48,15 @@ class Client {
     }
     
 
-    public function panierNB($id_u){
-        $sql = "SELECT COUNT(*) AS nombre_de_lignes FROM basket WHERE user_id = $id_u";
-        $count = $this->db->query($sql)->fetchColumn();
+    public function panierNB($id_u) {
+        $sql = "SELECT COUNT(*) AS nombre_de_lignes FROM basket WHERE user_id = :id_u";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_u', $id_u, PDO::PARAM_INT);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
         return $count;
     }
+    
 
     public function selectPanier($id_u){
         $sql = "select * from basket join plants on plants.id_plant = basket.plant_id where user_id = $id_u ";

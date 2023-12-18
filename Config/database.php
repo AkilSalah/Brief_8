@@ -19,4 +19,8 @@ require_once("../Classes/admin_class.php");
 $admin = new admin($con);
 require_once("../Classes/client.php");
 $client= new Client($con);
+require_once("../Classes/blogs.php");
+$blogs=new Blogs($con);
+require_once("../Classes/article.php");
+$article=new Article($con);
 ?>

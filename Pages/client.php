@@ -2,13 +2,17 @@
 require_once("../Config/database.php");
 session_start();
 
+$user_id = null;
+
 if (isset($_SESSION["user_id"])) {
-    $id_user = $_SESSION["user_id"];
+    $user_id = $_SESSION["user_id"];
+    
 }
+var_dump("$user_id");
 
 if (isset($_GET["id_pro"])) {
     $id_pro = $_GET['id_pro']; 
-    $req = $client->addPanier($id_user, $id_pro);
+    $req = $client->addPanier($user_id, $id_pro);
 
     if ($req) {
         header("location: client.php");
@@ -18,6 +22,7 @@ if (isset($_GET["id_pro"])) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -70,7 +75,7 @@ if (isset($_GET["id_pro"])) {
             <a class="nav-link d-flex align-items-center" href="panier.php">
             <i id="shop" class="fas fa-shopping-cart fa-lg me-2"></i>
             <?php
-            $nb = $client->panierNB($id_user);
+            $nb = $client->panierNB($user_id);
             echo $nb;
             ?>
         </a>
@@ -178,8 +183,12 @@ if (isset($_GET["id_pro"])) {
             <?php endforeach; ?>
         </div>
     </div>
-    
     </section>
+
+    
+
+
+
 
     <footer class="text-center text-white mt-5" ">
       <div class="container p-4">
