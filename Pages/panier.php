@@ -30,11 +30,10 @@ if(isset ($_GET['id'])){
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            height: auto;
+            height: 100vh;
         }
     </style>
 </head>
-
 <body>
 
     <section class="h-100 h-custom"  ">

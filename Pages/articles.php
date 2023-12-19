@@ -49,36 +49,6 @@ if (isset($_GET['id_theme'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        // $(document).ready(function () {
-        //     $("#simple-search").on("input", function () {
-        //         var searchQuery = $(this).val();
-        //         var themeId = getThemeIdFromURL();
-        //         console.log("Theme ID from URL:", themeId);
-        //         $.ajax({
-        //             type: "GET",
-        //             url: "./search.php",
-        //             data: {
-        //                 themeId: themeId,
-        //                 query: searchQuery
-        //             },
-        //             success: function (response) {
-        //                 console.log(response);
-
-        //                 $("#search-results").html(response);
-        //             },
-        //             error: function (error) {
-        //                 console.log("Ajax request failed:", error);
-        //             }
-        //         });
-        //     });
-        //     function getThemeIdFromURL() {
-        //         var urlParams = new URLSearchParams(window.location.search);
-        //         var themeId = urlParams.get('id_theme'); 
-        //         return themeId;
-        //     }
-        // });
-    </script>
     <style>
         .modal {
             display: none;
@@ -116,6 +86,37 @@ if (isset($_GET['id_theme'])) {
     </style>
 </head>
 <body>
+<nav class="relative px-4 py-4 flex justify-between items-center bg-gray-100 w-full overflow-x-hidden m-0">
+        <div class="flex justify-center md:flex md:justify-start px-10">
+            <a class="text-3xl font-bold -mt-5 " href="#">
+            <img src="../assets/images/logo-removebg-preview.png" alt="" style="width: 50px;">
+
+            </a>
+            <h3 class="font-serif text-black font-semibold text-2xl -mt-2">Plante</h3>
+        </div>
+        <div class="lg:hidden">
+            <button class="navbar-burger flex items-center text-blue-600 p-3">
+                <svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <title>Mobile menu</title>
+                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                </svg>
+            </button>
+        </div>
+        <h4 class="font-serif text-black font-semibold text-2xl -mt-2">Articles</h4>
+        <div class="flex gap-[10px]">
+        
+        <label for="table-search" class="sr-only">Search</label>
+        <form class="flex  justify-end" action="">
+                <div class=" w-full">
+                    <input type="text" id="simple-search" name="plant_name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search for a article" required>
+                </div>
+            </form>
+    </div>
+
+    </nav>
+
     <div class=" w-[91%] flex justify-center h-[20vh] items-center">
         <?php
             $tags = $article->selectTags($theme);
@@ -136,7 +137,7 @@ if (isset($_GET['id_theme'])) {
         ?>
     </div>
     <div id="search-results"></div>
-    <div id="articless" class="ALL min-h-[100vh] w-[90%] flex flex-wrap justify-evenly m-auto">
+    <div id="articless" class="ALL  min-h-[100vh] w-[90%] flex flex-wrap justify-evenly m-auto">
         <?php
         $articles = $article->selecyArticle($theme);
         foreach($articles as $article) :
@@ -144,7 +145,7 @@ if (isset($_GET['id_theme'])) {
                 <div
                     class=" w-[28%] h-[65vh] mb-[3rem] max-w-sm bg-white border  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a class="w-[100%]" href="article.php?id=<?php echo $article['article_id'] ?>">
-                        <img class="h-[38vh] w-[100%]  rounded-t-lg" src="../assets/images/<?= $article["article_image"] ?>"
+                        <img class="h-[38vh] w-[100%]  rounded-t-lg" src="../assets/images/<?=$article['article_image']?>"
                             alt="product image" />
                     </a>
                     <div class="px-5 pb-5">
@@ -183,6 +184,56 @@ if (isset($_GET['id_theme'])) {
                     </div>
                 </div>
                 <?php endforeach; ?>
+            <script>
+                //filter
+                var btn = document.querySelectorAll('.btn');
+
+        btn.forEach(btn => {
+            btn.addEventListener('click', function () {
+                let value = this.value;
+                console.log(value);
+                let XML = new XMLHttpRequest();
+
+                XML.onreadystatechange = function () {
+                    if (this.status == 200) {
+                        document.querySelector('.ALL').innerHTML = this.responseText;
+                    }
+                }
+
+                XML.open('GET', 'filter_article.php?TAG=' + value);
+                XML.send();
+            })
+        })  
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+        var searchInput = document.getElementById('simple-search');
+        searchInput.addEventListener('input', function () {
+            var searchQuery = this.value;
+            var themeId = getThemeIdFromURL();
+            console.log(searchQuery);
+            console.log("Theme ID from URL:", themeId);
+            var XML = new XMLHttpRequest();
+            XML.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                    document.querySelector('.ALL').innerHTML = this.responseText;
+                }
+            }
+            XML.open('GET', 'searchArticle.php?themeId=' + themeId + '&query=' + searchQuery, true);
+            XML.send();
+        });
+
+        function getThemeIdFromURL() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var themeId = urlParams.get('id_theme');
+            console.log(themeId);
+            return themeId;
+        }
+    });
+
+            </script>
+              
 
 </body>
 

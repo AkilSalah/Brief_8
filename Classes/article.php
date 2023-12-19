@@ -42,8 +42,6 @@ class Article{
         return $stmt;
     }
     
-    
-
     public function selectTags($theme_id){
         $sql ="SELECT * FROM tags WHERE theme_id ='$theme_id'";
         $stmt= $this->db->prepare($sql);
@@ -51,13 +49,26 @@ class Article{
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result; 
     }
-
-
-
-
-
-
-
+    public function filterArticle($tag){
+        $sql = "SELECT * FROM article 
+                JOIN users ON article.author_id = users.user_id 
+                WHERE JSON_SEARCH(article_tags, 'one','$tag' ) IS NOT NULL";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    
+    public function searchArticle($title){
+        $sql = "SELECT * FROM article JOIN users ON article.author_id = users.user_id WHERE article.article_title LIKE '%$title%'";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    
+    
 
 
 

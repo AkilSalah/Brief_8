@@ -8,7 +8,6 @@ if (isset($_SESSION["user_id"])) {
     $user_id = $_SESSION["user_id"];
     
 }
-var_dump("$user_id");
 
 if (isset($_GET["id_pro"])) {
     $id_pro = $_GET['id_pro']; 
@@ -45,57 +44,76 @@ if (isset($_GET["id_pro"])) {
         width: 200px;
         height: 200px;
     }
+    .nav{
+        height: 60px;
+    }
 </style> 
 </head>
 
 <body>
-    
-<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">PLANTS</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">HOME</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#about">ABOUTE</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#product">PRODUCT</a>
-                </li>
-            </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="../assets/images/logo-removebg-preview.png" alt="" style="width: 50px;">
+                <span class="fw-bold text-black ">PLANTE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav " style="margin-left: 40%;" >
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categories">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categories">Produits</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#blogs">Blogs</a>
+                    </li>
+                   
+                </ul>             
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item ">
+                        <a class="nav-link d-flex align-items-center" href="panier.php">
+                            <i id="shop" class="fas fa-shopping-cart fa-lg me-2"></i>
+                            <?php
+                            $nb = $client->panierNB($user_id);
+                            echo $nb;
+                            ?>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item ">
-            <a class="nav-link d-flex align-items-center" href="panier.php">
-            <i id="shop" class="fas fa-shopping-cart fa-lg me-2"></i>
-            <?php
-            $nb = $client->panierNB($user_id);
-            echo $nb;
-            ?>
-        </a>
-                  
-            </li>
-        </ul>
-    </div>
+    </nav>
 
-    </div>
-</nav>
-
-    <div class="home p-0">
-        <div class="position-relative ">
-            <img src="../assets/images/arrangement-jardin-potager-espace-copie.jpg" class="img-fluid" alt="...">
-            <h1 class="position-absolute top-50  start-50 translate-middle text-black">THE WORLD OF PLANTS</h1>
-            <button class="btn btn-success position-absolute top-50 mt-5 start-50 translate-middle-x" style="transform: translateX(50%);">More</button>
+    <div class="container mt-5" >
+        <div class="row">
+            <div class="col-7 d-flex m-auto">
+                <div class="mx-5 ">
+                    <h1 class="text-black">THE WORLD OF PLANTS</h1>
+                    <p>Les plantes, en plus d'apporter une touche de verdure à notre environnement,
+                        jouent un rôle crucial dans l'équilibre écologique de la planète.
+                        Elles contribuent à purifier l'air, offrent un habitat à la vie sauvage
+                        et ajoutent une beauté naturelle à notre quotidien.</p>
+                    <button class="btn btn-success w-25">More</button>
+                </div>
+            </div>
+            <div class="col-5">
+                <img src="../assets/images/6.jpg" class="img-fluid mt-5" alt="">
+            </div>
         </div>
+    </div>
     </div>
     </section>
-    <section class="sec2 " id="about" >
+    <section class="sec2 mt-5 " id="about" >
         <div class="container">
             <h3 class="text-center mt-3">Bienvenue dans votre espace dédié à l'amour des plantes sur Plants !   </h3>
             <div class="row  d-flex mt-5 ">
@@ -113,10 +131,10 @@ if (isset($_GET["id_pro"])) {
             </div>
     </section>
    
-    <section style="background-color: #eee;" id="product">
+    <section id="product">
         <h1 class="Product text-center mt-5"> Nos Produits</h1>
         <nav class="navbar ">
-            <div class="container justify-content-around ">
+            <div class="container justify-content-around mt-5 ">
                 <div>
                      <a class="btn fw-bold btn-outline-dark" href="client.php?voir_tout ">Tout </a>
                      <?php 
@@ -184,7 +202,12 @@ if (isset($_GET["id_pro"])) {
         </div>
     </div>
     </section>
-
+    
+    <section>
+        <?php 
+        include_once('../Pages/blogs.php');
+        ?>
+    </section>
     
 
 
