@@ -5,10 +5,8 @@ session_start();
 $user_id = null;
 
 if (isset($_SESSION["user_id"])) {
-    $user_id = $_SESSION["user_id"];
-    
+    $user_id = $_SESSION["user_id"];   
 }
-
 if (isset($_GET["id_pro"])) {
     $id_pro = $_GET['id_pro']; 
     $req = $client->addPanier($user_id, $id_pro);
@@ -22,10 +20,8 @@ if (isset($_GET["id_pro"])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>

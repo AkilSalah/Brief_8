@@ -27,7 +27,7 @@
                                    
                                 
                                 ?>
-                            <img src="<?php echo"../assets/images/" . $theme['theme_image']; ?>" style="height: 70%;" class="card-img-top" alt="">
+                            <img src="<?php echo"../assets/images/" . $theme['theme_image']; ?>" style="height: 60%;" class="card-img-top" alt="">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo"Nom : ". $theme['theme_name']; ?></h5>
                                 <p class="card-text mt-3 "><?php echo "Nombre des Articles : ". $count['nb_article']; ?></p>

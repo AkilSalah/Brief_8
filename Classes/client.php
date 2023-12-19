@@ -80,7 +80,7 @@ class Client {
         return $stmt;
     }
 
-    public function valider($id_u): void
+    public function valider($id_u)
     {
         $sqlSelect = "SELECT * FROM basket WHERE user_id = $id_u";
         $stmtSelect = $this->db->prepare($sqlSelect);
@@ -89,46 +89,22 @@ class Client {
         if ($stmtSelect->rowCount() > 0 ){
             $rows = $stmtSelect->fetchAll(PDO::FETCH_ASSOC);
             foreach ($rows as $row) {
+                // if(isset($_POST['valider'])){
                 $sqlInsert = "INSERT INTO commands (date, user_id, plant_id) VALUES (NOW(), $id_u, :id_produit)";
                 $stmtInsert = $this->db->prepare($sqlInsert);
                 $stmtInsert->bindParam(':id_produit', $row['plant_id']);
                 $stmtInsert->execute();
-            }
+            
 
             $sqlDelete = "DELETE FROM basket WHERE user_id = $id_u";
             $stmtDelete = $this->db->prepare($sqlDelete);
             $stmtDelete->execute();
-    
-            echo "La commande est valider.";
+
+            
         }
-         else {
-            echo "No commande pour Valider.";
-        }
+
     }
-    
-
-    
-    
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 ?>

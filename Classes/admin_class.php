@@ -55,7 +55,7 @@ class  Admin {
         $stmt->execute();
         return $stmt;
     }
-    
+
     public function afficherProduct (){
         $sql = "SELECT * FROM plants join categories on plants.category_id = categories.id_cat";
         $stmt= $this->db->prepare($sql);
@@ -68,7 +68,6 @@ class  Admin {
         $stmt->execute();
         return $stmt;
     }
-
     public function afficherProduit_u($id_u) {
         $sql = "SELECT * FROM plants WHERE id_plant = :id_u";
         $stmt = $this->db->prepare($sql);
@@ -77,7 +76,6 @@ class  Admin {
 
         return $stmt;
     }
-
     public function afficherTheme_u($id_u) {
         $sql = "SELECT * FROM theme 
                 JOIN tags ON theme.theme_id = tags.theme_id 
@@ -87,8 +85,6 @@ class  Admin {
         $stmt->execute();
         return $stmt;
     }
-    
-
     public function addTheme($t_image, $t_name, $t_desc) {
         $sql = "INSERT INTO theme (theme_name, theme_image, theme_desc) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($sql);
@@ -98,8 +94,6 @@ class  Admin {
         $stmt->execute();
         return $stmt;
     }
-    
-
     public function insertTags($theme_id, $tags) {
         $array = explode(",", $tags);
     
@@ -118,7 +112,6 @@ class  Admin {
         }
         return true;
     }
-    
     public function selectThemeId($name_t){
         $sql = "SELECT theme_id FROM theme WHERE theme_name = :name_t";
         $stmt = $this->db->prepare($sql);
@@ -162,6 +155,51 @@ class  Admin {
         $result = $stmt->execute();
         return $result;
     }
+
+    public function nbAdmin(){
+        $sql = "SELECT COUNT(*) as nbAdmin FROM users WHERE user_type = 2";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result['nbAdmin'];
+    }
+    public function nbClient(){
+        $sql = "SELECT COUNT(*) as nbClient FROM users WHERE user_type = 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result['nbClient'];
+    }
+    
+    public function nbCommande(){
+        $sql = "SELECT COUNT(*) as nbCommande FROM commands";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result['nbCommande'];
+    }
+    
+    public function nbCategories(){
+        $sql = "SELECT COUNT(*) as nbCat FROM categories";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result['nbCat'];
+    }
+    
+    public function nbProducts(){
+        $sql = "SELECT COUNT(*) as nbProduct FROM plants";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result['nbProduct'];
+    }
+    
     
 
 

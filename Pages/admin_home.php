@@ -26,8 +26,14 @@
   <div class="flex">
 <div class="left " style="margin-left: -1%;"  >
 <?php 
- include_once  ("../includes/navbar_admin.php");
- ?>
+    include_once("../Config/database.php");
+    include_once  ("../includes/navbar_admin.php");
+    $nbAdmin = $admin->nbAdmin();
+    $nbClient = $admin->nbClient();
+    $nbCommands = $admin->nbCommande();
+    $nbCategorie = $admin->nbCategories();
+    $nbProduct = $admin->nbProducts();
+    ?>
 </div>
 
 <div class="container w-75 py-4">
@@ -35,30 +41,37 @@
         <div class="col-lg-6 mb-4">
             <div class="card row">
                 <i class="fa fa-users mb-2" style="font-size: 50px;"></i>
-                <h4 class="mt-4" style="color:black;">Total admins :hhhhhhh</h4>
-                <h4 class="mt-4" style="color:black;">Total clients : hhhhhhhh</h4>
-            </div>
+                <?php if (isset($nbAdmin)): ?>
+                    <h4 class="mt-4" style="color:black;">Admins : <?php echo $nbAdmin; ?></h4>
+                <?php endif; ?>
+                <?php if (isset($nbClient)): ?>
+                    <h4 class="mt-4" style="color:black;">Clients : <?php  echo $nbClient; ?></h4>
+                <?php endif; ?> 
+                </div>
         </div>
         <div class="col-lg-6 mb-4">
             <div class="card row">
                 <i class="fa fa-th-large mb-2" style="font-size: 50px;"></i>
-                <h4 class="mt-4" style="color:black;"  class="" >Total Categories</h4>
-                <h5 class="mt-4" style="color:black;"> hhhhhhhhhhhhh</h5>
-            </div>
+                <?php if (isset($nbCategorie)): ?>
+                <h4 class="mt-4" style="color:black;"  class="" >Total Categories <?php echo $nbCategorie; ?></h4>
+                <?php endif; ?>
+                </div>
         </div>
         <div class="col-lg-6 mb-4">
             <div class="card row">
                 <i class="fa fa-th mb-2" style="font-size: 50px;"></i>
-                <h4 class="mt-4" style="color:black;">Total Products</h4>
-                <h5 class="mt-4" style="color:black;">hhhhhhhhhhh</h5>
-            </div>
+                <?php if (isset($nbProduct)): ?>
+                <h4 class="mt-4" style="color:black;">Total Products <?php echo $nbProduct; ?></h4>
+                <?php endif; ?>
+                </div>
         </div>
         <div class="col-lg-6 mb-4">
             <div class="card row">
                 <i class="fa fa-list mb-2" style="font-size: 50px;"></i>
-                <h4 class="mt-4" style="color:black;">Total Orders</h4>
-                <h5 class="mt-4" style="color:black;">hhhhhhhh</h5>
-            </div>
+                <?php if (isset($nbCommands)): ?>
+                <h4 class="mt-4" style="color:black;">Total Orders <?php echo $nbCommands; ?></h4>
+                <?php endif; ?>
+                </div>
         </div>
     </div>
 </div>

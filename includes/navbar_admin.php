@@ -19,7 +19,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../Pages/admin_home.php">
                         <i class="fas fa-home"></i>
                         <span class="nav-item">Home</span>
                     </a>
