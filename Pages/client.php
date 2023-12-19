@@ -9,7 +9,9 @@ if (isset($_SESSION["user_id"])) {
 }
 if (isset($_GET["id_pro"])) {
     $id_pro = $_GET['id_pro']; 
-    $req = $client->addPanier($user_id, $id_pro);
+    $client->setId_produit($id_pro);
+    $client->setId_user($user_id);
+    $req = $client->addPanier();
 
     if ($req) {
         header("location: client.php");
@@ -71,7 +73,6 @@ if (isset($_GET["id_pro"])) {
                     <li class="nav-item">
                         <a class="nav-link" href="#blogs">Blogs</a>
                     </li>
-                   
                 </ul>             
             </div>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -80,7 +81,8 @@ if (isset($_GET["id_pro"])) {
                         <a class="nav-link d-flex align-items-center" href="panier.php">
                             <i id="shop" class="fas fa-shopping-cart fa-lg me-2"></i>
                             <?php
-                            $nb = $client->panierNB($user_id);
+                            $client->setId_user($user_id);
+                            $nb = $client->panierNB();
                             echo $nb;
                             ?>
                         </a>
@@ -164,7 +166,8 @@ if (isset($_GET["id_pro"])) {
             if (isset($_GET['id_categorie'])) {
                 $categoryId = $_GET['id_categorie'];
                 if (!empty($categoryId)) {
-                    $products = $client->filtreCategory($categoryId);
+                    $client->setId_category($categoryId);
+                    $products = $client->filtreCategory();
                 }
             }
             ?>

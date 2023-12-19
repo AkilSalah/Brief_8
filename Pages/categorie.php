@@ -4,8 +4,8 @@ require_once("../Config/database.php");
 if(isset ($_POST["button"])){
 
     $category= $_POST["nom_cat"];
-
-    $result = $admin->addCategory($category);
+    $admin->set_categorieNom($category);
+    $result = $admin->addCategory();
     
     if ($result) {
         $message=   "La catégorie a été ajoutée avec succès.";

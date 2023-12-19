@@ -28,7 +28,6 @@ if (isset($_GET['id_article'])) {
 <body class="w-full max-w-[70vw] flex flex-col items-center justify-center mx-">
 
     <div>
-        <!-- Replace PHP content with static content -->
         <h1 class="text-6xl font-serif font-bold py-8"><?=$detail['article_title']?></h1>
 
         <div class="flex flex-col gap-2">
@@ -46,31 +45,24 @@ if (isset($_GET['id_article'])) {
         </div>
         <div class="flex border border-b-[#F2F2F2] border-t-[#F2F2F2] my-5">
             <div class="drawer drawer-end">
-                <!-- Replace PHP content with static content -->
                 <div class="drawer-content">
                     <div class="flex">
-                        <!-- Add your static content here -->
                     </div>
                 </div>
                 <div class="drawer-side">
-                    <!-- Replace PHP content with static content -->
                     <ul class="menu p-4 w-80 min-h-full bg-base-100 text-base-content">
                         <h3 class="mx-auto text-center">What are your thoughts?</h3>
                         <label for="user-comment" class="text-xs opacity-50">Your Comment:</label>
                         <input type="text" id="user-comment" class="input input-bordered w-full mt-1" name="comment"
                             placeholder="Type your comment..." onkeydown="submitOnEnter(event)">
                         <button onclick="submitComment()">Add</button>
-                        <!-- Add your static content here -->
                     </ul>
                 </div>
             </div>
             <div class="flex">
-                <!-- Add your static content here -->
             </div>
         </div>
-        <!-- Replace PHP content with static content -->
         <img src="../assets/images/<?=$detail['article_image'] ?>" alt="Article Image" style="max-width: 30%;">
-        <!-- Replace PHP content with static content -->
         <p class="font-georgina text-xl"><?=$detail['content']?></p>
     </div>
 <?php }?>

@@ -4,7 +4,8 @@ session_start();
 
 if (isset($_GET["id_s"])) {
     $id_d = $_GET["id_s"];
-    $req = $admin->deleteTheme($id_d);
+    $admin->set_themeId($id_d);
+    $req = $admin->deleteTheme();
     if ($req) {
         header("location: theme.php");
         exit();
@@ -13,7 +14,8 @@ if (isset($_GET["id_s"])) {
 
 if (isset($_GET['id_m'])) {
     $id_u = $_GET['id_m'];
-    $selectIdT = $admin->afficherTheme_u($id_u);
+    $admin->set_themeId($id_u);
+    $selectIdT = $admin->afficherTheme_u();
 
     if ($selectIdT) {
         $result = $selectIdT->fetch(PDO::FETCH_ASSOC);
@@ -22,8 +24,10 @@ if (isset($_GET['id_m'])) {
             $nom_t = $_POST['nom_t'];
             $imgt = $_POST['imgt'];
             $desc_t = $_POST['desc_t'];
-
-            $update_req = $admin->updateTheme($nom_t, $imgt, $desc_t,$id_u);
+            $admin->set_themeName($nom_t);
+            $admin->set_themeImage($imgt); 
+            $admin->set_themeDesc($desc_t);
+            $update_req = $admin->updateTheme();
 
             if ($update_req) {
                 header("location: theme.php");

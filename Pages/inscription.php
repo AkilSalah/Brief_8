@@ -6,8 +6,11 @@ if(isset($_POST["submit"])) {
     $prenom = $_POST["Prenom"];
     $email = $_POST["Email"];
     $password = $_POST["password"];
-    
-    $results = $user->insertUser($name, $prenom, $email, $password);
+    $user->set_email($email);
+    $user->set_mdp($password);
+    $user->set_nom($name);
+    $user->set_prenom($prenom);
+    $results = $user->insertUser();
 
     if ($results) {
         $_SESSION["Email"]=$email;

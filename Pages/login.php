@@ -12,7 +12,10 @@ if(isset($_SESSION["user_id"])){
 if(isset($_POST["submit"])){
     $email = $_POST["Email"];
     $password = $_POST["Password"];
-    $result = $user->userLogin($email, $password); 
+    $user->set_email($email);
+    $user->set_mdp($password);
+    $result = $user->userLogin(); 
+    
 
     if ($result) {
         $userData = $result->fetch(PDO::FETCH_ASSOC);

@@ -7,7 +7,9 @@ if(isset($_SESSION["Email"])) {
 
 if (isset($_POST["admin_submit"])) {
     $userRole = 2;
-    $results = $role->userRole($userRole, $email);
+    $role->set_email($email);
+    $role->set_role($userRole);
+    $results = $role->userRole();
 
     if ($results) {
         header("location: login.php");
@@ -19,7 +21,9 @@ if (isset($_POST["admin_submit"])) {
 }elseif
    (isset($_POST["client_submit"])) {
     $userRole = 1;
-    $results = $role->userRole($userRole, $email);
+    $role->set_email($email);
+    $role->set_role($userRole);
+    $results = $role->userRole();
 
     if ($results) {
         header("location: login.php");

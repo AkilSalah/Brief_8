@@ -15,7 +15,7 @@
         <?php
         include_once("../includes/navbar_admin.php");
         include_once("../Config/database.php");
-        ?>
+        ?>  
         <div class="form">
             <?php
             if (isset($_POST["button"]) && !empty($_POST["nom_cat"]) && !empty($_POST["nom_pro"]) && !empty($_POST["prix_pro"])) {
@@ -23,7 +23,11 @@
                 $id_cat = $_POST["nom_cat"];
                 $nom_pro = $_POST["nom_pro"];
                 $prix_pro = $_POST["prix_pro"];
-                $req = $admin->addProduct($img_pro,$nom_pro,$prix_pro,$id_cat);
+                $admin->set_productImage($img_pro);
+                $admin->set_productName($nom_pro);
+                $admin->set_productPrice($prix_pro);
+                $admin->set_categorieId($id_cat);
+                $req = $admin->addProduct();
                 if ($req) {
                     $message = "Le produit a été ajouté avec succès.";
                     header("Location: produit.php");
@@ -57,7 +61,7 @@
                     $cat = $admin->afficherCategory();
                     foreach ($cat as $row){
                     ?>
-                        <option value="<?= $row["id_cat"] ?>"> <?= $row["name_cat"] ?></option>
+                        <option value="<?= $row["id_cat"]?>"> <?= $row["name_cat"] ?></option>
                     <?php
                     }
                     ?>

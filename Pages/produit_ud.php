@@ -3,7 +3,8 @@ include_once("../Config/database.php");
 
 if (isset($_GET["id_s"])) {
     $id_d = $_GET["id_s"];
-    $req = $admin->deleteProduct($id_d);
+    $admin->set_productId($id_d);
+    $req = $admin->deleteProduct();
     if ($req) {
         header("location: produit.php");
         exit();
@@ -13,7 +14,8 @@ if (isset($_GET["id_s"])) {
 
 if (isset($_GET['id_m'])) {
     $id_u = $_GET['id_m'];
-    $result = $admin->afficherProduit_u($id_u);
+    $admin->set_productId($id_u);
+    $result = $admin->afficherProduit_u();
 
     if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
 
@@ -22,10 +24,13 @@ if (isset($_GET['id_m'])) {
             $prix = $_POST['prix'];
             $img = $_POST['imgp'];
             $nom_c = $_POST['nom_cat'];
-
+            // die($nom_c);
             if (!empty($nom_p)) { 
-                $req_update = $admin->updateProduct($nom_p, $id_u, $img, $prix, $nom_c);
-
+                $admin->set_productName($nom_p);
+                $admin->set_productPrice($prix);
+                $admin->set_productImage($img);
+                $admin->set_categorieId($nom_c);
+                $req_update = $admin->updateProduct();
                 if ($req_update) {
                     header("location: produit.php");
                     exit();
@@ -83,7 +88,7 @@ if (isset($_GET['id_m'])) {
                         $cat = $admin->afficherCategory();
                         foreach ($cat as $all_cat) {
                             ?>
-                            <option value="<?= $all_cat["name_cat"] ?>"> <?= $all_cat["name_cat"] ?></option>
+                            <option value="<?= $all_cat["id_cat"] ?>"> <?= $all_cat["name_cat"] ?></option>
                         <?php
                         }
                         ?>

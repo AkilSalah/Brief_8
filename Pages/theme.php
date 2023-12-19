@@ -6,12 +6,16 @@ if(isset($_POST["button"])){
     $t_name = $_POST["nom_theme"];
     $_SESSION['nom_theme'] =$t_name;
     $t_desc = $_POST["description"];    
-    $result = $admin->addTheme($t_image, $t_name, $t_desc);
+    $admin->set_themeName($t_name);
+    $admin->set_themeDesc($t_desc);
+    $admin->set_themeImage($t_image);
+    $result = $admin->addTheme();
 
     if($result) {
-        $theme_id = $admin->selectThemeId($t_name);  
+        $theme_id = $admin->selectThemeId();  
         $tags = $_POST["tagsInput"];
-        $sql = $admin->insertTags($theme_id, $tags);
+        $admin->set_themeId($theme_id);
+        $sql = $admin->insertTags( $tags);
         header("location: ../Pages/theme.php");
         exit();
     } else {
@@ -71,13 +75,14 @@ if(isset($_POST["button"])){
                 <?php
             $result = $admin->afficherTheme();
             foreach ($result as $row) {
-                $resultt = $admin->afficherTags($row["theme_id"]);
+                $admin->set_themeId($row["theme_id"]);
+                $resultt = $admin->afficherTags();
 
                 $tagNames = "";
                 foreach ($resultt as $tag) {
                     $tagNames .= $tag["tag_name"] . ', ';
                 }
-                $tagNames = rtrim($tagNames, ', '); // Remove the trailing comma
+                $tagNames = rtrim($tagNames, ', '); 
                 $_SESSION ['tags']=$tagNames;
                 ?>
                 <tr>

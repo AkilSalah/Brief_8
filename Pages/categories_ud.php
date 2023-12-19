@@ -3,22 +3,24 @@ require_once("../Config/database.php");
 
 if (isset($_GET['id_s'])) {
     $id_d = $_GET['id_s'];
-    $result = $admin->deleteCategory($id_d);
+    $admin->set_categorieId($id_d);
+    $result = $admin->deleteCategory();
     header("location: categorie.php");
 }
 
 
 if (isset($_GET['id_m'])) {
     $id_u = $_GET['id_m'];
-    $result = $admin->afficherCategory_u($id_u);
+    $admin->set_categorieId($id_u);
+    $result = $admin->afficherCategory_u();
 
     if ($row = $result) { 
         if (isset($_POST['button'])) {
             $nom = $_POST['nom'];
 
             if (!empty($nom)) {
-                $req_update = $admin->updateCategory($nom, $id_u);
-
+                $admin->set_categorieNom($nom);
+                $req_update = $admin->updateCategory();
                 if ($req_update) {
                     header("location: categorie.php");
                     exit(); 
