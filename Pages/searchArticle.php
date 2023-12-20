@@ -37,13 +37,13 @@ class=" w-[28%] h-[65vh] mb-[3rem] max-w-sm bg-white border  border-gray-200 rou
                                     <path
                                         d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z" />
                                 </svg>
-                                <p class=" text-gray-600 text-[14px] ">
+                                <p class=" text-gray-600 text-[12px] ">
                                     <?php echo $title["created_at"]; ?>
                                 </p>
                             </div>
                             <form action="article_info.php" method="get">
                             <input type="hidden" name="id_article" value="<?=$title['article_id']?>">
-                            <button type="submit" class="bg-green-800 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+                            <button type="submit" class="bg-green-800 hover:bg-gray-600 text-white font-bold py-2 px-2 rounded">
                                 Découvrez plus
                             </button>
                         </form>

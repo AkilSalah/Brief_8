@@ -10,8 +10,11 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $client->setId_basket($id);
     $delete = $client->deletePanier();
-    header('Location: panier.php');
-    exit();
+}
+
+if (isset($_POST['valider'])) {
+    $client->setId_user($id_user);
+    $client->valider(); 
 }
 
 ?>
@@ -97,15 +100,9 @@ if (isset($_GET['id'])) {
                                             <?php endif; ?>
                                             
                                             <form method="post" action="">
-                                                <?php
-                                                if (isset($_POST['valider'])) {
-                                                    $client->valider();
-                                                    header('Location: ../pages/panier.php');
-                                                    exit(); 
-                                                }
-                                                ?>
-                                                <input type="submit" value="Valider" name="valider" id="valider" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">
+                                                <button value="Valider" name="valider" id="valider" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Valider</button>
                                             </form>
+
                                         </div>
                                     </div>
                                 </div>

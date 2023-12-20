@@ -126,14 +126,17 @@ public function addPanier() {
     }
 
     public function deletePanier(){
+        if($this->get_id_basket() !== null) {
+            $idbasket = $this->get_id_basket();
+        }
         $sql = "delete from basket where id = :id";
         $stmt= $this->db->prepare($sql);
-        $stmt->bindParam(':id', $this->get_id_basket() );
+        $stmt->bindParam(':id', $idbasket );
         $stmt->execute();
         return $stmt;
     }
 
-    public function valider(){
+    public function valider()  {
         $user_id = $this->get_id_user();
         $sqlSelect = "SELECT * FROM basket WHERE user_id = :id_u";
         $stmtSelect = $this->db->prepare($sqlSelect);
@@ -151,15 +154,20 @@ public function addPanier() {
                 $stmtInsert->bindParam(':id_u', $user_id_for_bind);
                 $stmtInsert->bindParam(':id_produit', $row['plant_id']);
                 $stmtInsert->execute();
-    
+            }
                 $sqlDelete = "DELETE FROM basket WHERE user_id = :id_u";
                 $stmtDelete = $this->db->prepare($sqlDelete);
                 
                 $stmtDelete->bindParam(':id_u', $user_id_for_bind);
                 
                 $stmtDelete->execute();
-            }
-        }
+                
+        }   
+           
+        header('location: ../Pages/client.php'); 
+        exit();
+
+        
     }
     
 }
